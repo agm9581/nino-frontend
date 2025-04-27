@@ -1,0 +1,18 @@
+<h2>Chat</h2>
+
+<div id="chat-container" (scroll)="onScroll()">
+  <div *ngFor="let message of messages">
+    <p>{{ message.sender }}: {{ message.content }}</p>
+  </div>
+</div>
+
+<!-- Form to send a new message -->
+<form (submit)="sendMessage(messageContent)">
+  <textarea name="message" required></textarea>
+  <button type="submit">Send</button>
+</form>
+
+<!-- Load more messages when scrolling -->
+<button *ngIf="messages.length > 0" (click)="loadMessages()">
+  Load Older Messages
+</button>
