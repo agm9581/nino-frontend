@@ -1,11 +1,11 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from './auth.service';
+import { SocketService } from './socket.service';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, HttpClientModule],
-  providers: [AuthService],
+  imports: [CommonModule],
+  providers: [SocketService],
 })
-export class AuthModule {}
+export class WebsocketModule {}

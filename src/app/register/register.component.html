@@ -1,13 +1,80 @@
-<h2>Register</h2>
-<form (submit)="onSubmit()">
-  <div>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required />
+<div
+  class="d-flex justify-content-center align-items-center bg-gradient-custom"
+>
+  <div class="card p-4 shadow-sm" style="width: 100%; max-width: 420px">
+    <h2 class="text-center mb-4">Register</h2>
+    <div class="auth-form-wrapper">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="Enter your email"
+            required
+          />
+          <div
+            class="text-danger mt-1"
+            *ngIf="
+              registerForm.get('email')?.invalid &&
+              registerForm.get('email')?.touched
+            "
+          >
+            A valid email is required.
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            class="form-control"
+            placeholder="At least 8 characters"
+            required
+          />
+          <div
+            class="text-danger mt-1"
+            *ngIf="
+              registerForm.get('password')?.invalid &&
+              registerForm.get('password')?.touched
+            "
+          >
+            Password must be at least 8 characters long.
+          </div>
+        </div>
+
+        <!-- Repeat Password -->
+        <div class="mb-3">
+          <label for="repeatPassword" class="form-label">Repeat Password</label>
+          <input
+            id="repeatPassword"
+            type="password"
+            formControlName="repeatPassword"
+            class="form-control"
+            placeholder="Repeat your password"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          [disabled]="!registerForm.valid"
+        >
+          Register
+        </button>
+
+        <p class="text-center mt-3">
+          Already have an account?
+          <a routerLink="/login">Login</a>
+        </p>
+      </form>
+    </div>
   </div>
-  <div>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required />
-  </div>
-  <button type="submit">Register</button>
-  <p>Already have an account? <a routerLink="/login">Login</a></p>
-</form>
+</div>
