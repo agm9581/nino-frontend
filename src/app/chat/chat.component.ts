@@ -16,6 +16,9 @@ import {
   FormGroup,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { AuthModule } from '../auth/auth.module';
+import { AuthService } from '../auth/auth.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -25,6 +28,8 @@ import {
     HttpClientModule,
     WebsocketModule,
     ReactiveFormsModule,
+    AuthModule,
+    RouterModule,
   ],
 
   templateUrl: './chat.component.html',
@@ -43,7 +48,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private chatService: ChatService,
-    private readonly socketService: SocketService
+    private readonly socketService: SocketService,
+    private readonly authService: AuthService,
+    public router: Router
   ) {}
 
   ngAfterViewChecked(): void {
@@ -112,5 +119,8 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     });
 
     this.messageForm.reset();
+  }
+  logOut() {
+    this.authService.logOut();
   }
 }

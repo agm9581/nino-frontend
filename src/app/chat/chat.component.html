@@ -1,57 +1,68 @@
-<div
-  class="container d-flex flex-column justify-content-center"
-  style="height: 100vh"
->
-  <h2 class="text-center my-4">Chat</h2>
-
-  <!-- Chat container (scrollable area) -->
+<div class="bg-gradient-custom">
   <div
-    id="chat-container"
-    #chatContainer
-    (scroll)="onScroll()"
-    class="mb-3 p-3 border rounded-3 shadow-sm flex-grow-1 overflow-auto"
-    style="max-height: 70vh; overflow-y: auto"
+    class="container d-flex flex-column justify-content-center bg-white"
+    style="height: 100vh"
   >
-    <div *ngFor="let message of messages" class="d-flex flex-column mb-2">
-      <div class="d-flex justify-content-between">
-        <span class="text-muted" style="font-size: 0.875rem">{{
-          message.createdAt | date : "MMM d, HH:mm"
-        }}</span>
+    <h2 class="text-center my-4">Nino</h2>
+
+    <!-- Chat container (scrollable area) -->
+    <div
+      id="chat-container"
+      #chatContainer
+      (scroll)="onScroll()"
+      class="mb-3 p-3 border rounded-3 shadow-sm flex-grow-1 overflow-auto"
+      style="max-height: 70vh; overflow-y: auto"
+    >
+      <div *ngFor="let message of messages" class="d-flex flex-column mb-2">
+        <div class="d-flex justify-content-between">
+          <span class="text-muted" style="font-size: 0.875rem">{{
+            message.createdAt | date : "MMM d, HH:mm"
+          }}</span>
+        </div>
+        <p class="mb-0">{{ message.content }}</p>
       </div>
-      <p class="mb-0">{{ message.content }}</p>
+    </div>
+
+    <!-- Form to send a new message (fixed at the bottom) -->
+    <form
+      (submit)="sendMessage(); $event.preventDefault()"
+      [formGroup]="messageForm"
+      class="d-flex mt-auto"
+    >
+      <div class="flex-grow-1 m-1 p-1">
+        <textarea
+          class="form-control"
+          formControlName="message"
+          required
+          placeholder="Type your message..."
+          rows="3"
+        ></textarea>
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary ml-2 p-3"
+        [disabled]="!messageForm.valid"
+      >
+        Send
+      </button>
+    </form>
+
+    <!-- Load more messages when scrolling -->
+    <button
+      *ngIf="messages.length > 0"
+      (click)="loadMessages()"
+      class="btn btn-link mt-3"
+    >
+      Load Older Messages
+    </button>
+    <div class="d-flex justify-content-center py-2">
+      <button
+        routerLink="/login"
+        (click)="logOut()"
+        class="btn btn-danger w-40 p-10"
+      >
+        LogOut
+      </button>
     </div>
   </div>
-
-  <!-- Form to send a new message (fixed at the bottom) -->
-  <form
-    (submit)="sendMessage(); $event.preventDefault()"
-    [formGroup]="messageForm"
-    class="d-flex mt-auto"
-  >
-    <div class="flex-grow-1">
-      <textarea
-        class="form-control"
-        formControlName="message"
-        required
-        placeholder="Type your message..."
-        rows="3"
-      ></textarea>
-    </div>
-    <button
-      type="submit"
-      class="btn btn-primary ml-2"
-      [disabled]="!messageForm.valid"
-    >
-      Send
-    </button>
-  </form>
-
-  <!-- Load more messages when scrolling -->
-  <button
-    *ngIf="messages.length > 0"
-    (click)="loadMessages()"
-    class="btn btn-link mt-3"
-  >
-    Load Older Messages
-  </button>
 </div>
