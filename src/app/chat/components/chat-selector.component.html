@@ -1,0 +1,4 @@
+<div>
+    <button *ngFor="let chat of openChats$ | async" class="d-flex"
+        class="btn btn-primary py-2  m-2">{{chat.title}}</button>
+</div>

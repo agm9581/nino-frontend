@@ -19,6 +19,7 @@ import {
 import { AuthModule } from '../auth/auth.module';
 import { AuthService } from '../auth/auth.service';
 import { Router, RouterModule } from '@angular/router';
+import { ChatSelectorComponent } from "./components/chat-selector.component";
 
 @Component({
   selector: 'app-chat',
@@ -30,6 +31,8 @@ import { Router, RouterModule } from '@angular/router';
     ReactiveFormsModule,
     AuthModule,
     RouterModule,
+    ChatSelectorComponent
+
   ],
 
   templateUrl: './chat.component.html',
@@ -51,7 +54,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     private readonly socketService: SocketService,
     private readonly authService: AuthService,
     public router: Router
-  ) {}
+  ) { }
 
   ngAfterViewChecked(): void {
     if (this.shouldScroll) {
