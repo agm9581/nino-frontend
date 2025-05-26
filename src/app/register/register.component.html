@@ -1,10 +1,47 @@
-<div
-  class="d-flex justify-content-center align-items-center bg-gradient-custom"
->
+<div class="d-flex justify-content-center align-items-center bg-gradient-custom">
   <div class="card p-4 shadow-sm" style="width: 100%; max-width: 420px">
     <h2 class="text-center mb-4">Register</h2>
     <div class="auth-form-wrapper">
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <!-- First Name -->
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <input
+            id="firstName"
+            type="text"
+            formControlName="firstName"
+            class="form-control"
+            placeholder="Enter your first name"
+            required
+          />
+        </div>
+
+        <!-- Last Name -->
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input
+            id="lastName"
+            type="text"
+            formControlName="lastName"
+            class="form-control"
+            placeholder="Enter your last name"
+            required
+          />
+        </div>
+
+        <!-- Username -->
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            id="username"
+            type="text"
+            formControlName="username"
+            class="form-control"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+
         <!-- Email -->
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
@@ -18,10 +55,7 @@
           />
           <div
             class="text-danger mt-1"
-            *ngIf="
-              registerForm.get('email')?.invalid &&
-              registerForm.get('email')?.touched
-            "
+            *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
           >
             A valid email is required.
           </div>
@@ -40,10 +74,7 @@
           />
           <div
             class="text-danger mt-1"
-            *ngIf="
-              registerForm.get('password')?.invalid &&
-              registerForm.get('password')?.touched
-            "
+            *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
           >
             Password must be at least 8 characters long.
           </div>
@@ -62,13 +93,12 @@
           />
         </div>
 
-        <button
-          type="submit"
-          class="btn btn-primary w-100"
-          [disabled]="!registerForm.valid"
-        >
+        <button type="submit" class="btn btn-primary w-100" [disabled]="!registerForm.valid">
           Register
         </button>
+        <div *ngIf="registrationError$ | async" class="alert alert-danger mt-3">
+          Registration failed. Please check your information and try again.
+        </div>
 
         <p class="text-center mt-3">
           Already have an account?

@@ -8,9 +8,9 @@ import { Chat } from './models/chat.model';
 @Injectable({
   providedIn: 'root',
 })
-export class ChatService {
+export class ChannelService {
   private apiUrl = environment.apiUrl;
-  private baseUrl: string = `${this.apiUrl}/channel`; // Adjust to your backend API
+  private baseUrl: string = `${this.apiUrl}/channel`; 
 
   constructor(private http: HttpClient) { }
 

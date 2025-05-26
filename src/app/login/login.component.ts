@@ -21,7 +21,7 @@ import { httpErrorInterceptor } from '../interceptors/http-error.interceptor';
 })
 export class LoginComponent {
   public errorMessage: string = '';
-  
+
   constructor(
     private readonly authService: AuthService,
     private router: Router
@@ -38,7 +38,7 @@ export class LoginComponent {
 
   async onSubmit() {
     this.errorMessage = ''; // Clear any previous error messages
-    
+
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
 
@@ -46,13 +46,16 @@ export class LoginComponent {
         next: (res) => {
           console.log('Login successful');
           localStorage.setItem('token', res.access_token);
-          this.router.navigate(['/chat']);
+          this.router.navigate(['/channel']);
         },
         error: (error) => {
           // Extract error message from the error response
-          this.errorMessage = error.error?.response?.message || error.error?.message || error.message;
+          this.errorMessage =
+            error.error?.response?.message ||
+            error.error?.message ||
+            error.message;
           console.error('Login error:', this.errorMessage);
-        }
+        },
       });
     } else {
       console.log('Form Invalid');

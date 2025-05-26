@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ChatService } from './chat.service'; // Import the ChatService
+import { ChannelService } from './channel.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { WebsocketModule } from '../socket/socket.module';
@@ -22,8 +22,8 @@ import { Router, RouterModule } from '@angular/router';
 import { ChatSelectorComponent } from "./components/chat-selector.component";
 
 @Component({
-  selector: 'app-chat',
-  providers: [ChatService],
+  selector: 'app-channel',
+  providers: [ChannelService],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -35,10 +35,10 @@ import { ChatSelectorComponent } from "./components/chat-selector.component";
 
   ],
 
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss'],
+  templateUrl: './channel.component.html',
+  styleUrls: ['./channel.component.scss'],
 })
-export class ChatComponent implements OnInit, AfterViewChecked {
+export class ChannelComponent implements OnInit, AfterViewChecked {
   messages: any[] = [];
   before: string = ''; // Holds the ID or timestamp of the last fetched message
   limit: number = 20; // Number of messages to fetch per request
@@ -46,11 +46,11 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   messageForm: FormGroup = new FormGroup({
     message: new FormControl(''),
   });
-  @ViewChild('chatContainer') private chatContainer!: ElementRef;
+  @ViewChild('channelContainer') private channelContainer!: ElementRef;
   private shouldScroll = true;
 
   constructor(
-    private chatService: ChatService,
+    private channelService: ChannelService,
     private readonly socketService: SocketService,
     private readonly authService: AuthService,
     public router: Router
@@ -63,7 +63,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   onScroll(): void {
-    const el = this.chatContainer.nativeElement;
+    const el = this.channelContainer.nativeElement;
     const threshold = 1; // pixels from bottom to still count as "at bottom"
     const atBottom =
       el.scrollHeight - el.scrollTop - el.clientHeight < threshold;
@@ -72,7 +72,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
   private scrollToBottom(): void {
     try {
-      const el = this.chatContainer.nativeElement;
+      const el = this.channelContainer.nativeElement;
       el.scrollTop = el.scrollHeight;
     } catch (err) {
       console.error('Auto-scroll failed:', err);
@@ -92,7 +92,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   loadMessages(): void {
-    this.chatService
+    this.channelService
       .getMessages(this.before, this.limit)
       .subscribe((messages: any[]) => {
         if (messages && messages.length > 0) {

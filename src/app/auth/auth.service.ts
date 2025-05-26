@@ -2,6 +2,7 @@ import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { Member } from '../entities/member';
 
 @Injectable({
   providedIn: 'root',
@@ -24,21 +25,16 @@ export class AuthService {
         map((response) => response),
         catchError((err) => {
           return throwError(() => err);
-        })
+        }),
       );
   }
-  register(email: string, password: string): Observable<string> {
-    return this.http
-      .post<string>(`${this.apiUrl}/auth/register`, {
-        email,
-        password,
-      })
-      .pipe(
-        map((response) => response),
-        catchError((err) => {
-          return throwError(() => err);
-        })
-      );
+  register(member: Member): Observable<string> {
+    return this.http.post<string>(`${this.apiUrl}/auth/register`, member).pipe(
+      map((response) => response),
+      catchError((err) => {
+        return throwError(() => err);
+      }),
+    );
   }
 
   logOut() {
